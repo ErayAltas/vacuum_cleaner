@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
   void startSystem() {
     systemLogs.add("system is starting");
     systemLogsController.text = systemLogs.join("\n");
+    systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     startCleaningTimer();
     systemTimer = Timer.periodic(
       const Duration(seconds: 1),
@@ -63,6 +64,7 @@ class _HomePageState extends State<HomePage> {
           cancelTimers();
           systemLogs.add("system is shutting down");
           systemLogsController.text = systemLogs.join("\n");
+          systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
         }
       },
     );
@@ -80,6 +82,7 @@ class _HomePageState extends State<HomePage> {
   void decideWhichRoom() {
     systemLogs.add("Vacuum cleaner controlling room A and room B");
     systemLogsController.text = systemLogs.join("\n");
+    systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     if (roomA.isDirty) {
       cleanRoomA();
     } else if (roomB.isDirty) {
@@ -87,16 +90,19 @@ class _HomePageState extends State<HomePage> {
     } else {
       systemLogs.add("Both rooms are clean");
       systemLogsController.text = systemLogs.join("\n");
+      systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     }
   }
 
   Future<void> cleanRoomA() async {
     systemLogs.add("Vacuum cleaner is cleaning room A");
     systemLogsController.text = systemLogs.join("\n");
+    systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     setState(() {});
     await Future.delayed(const Duration(seconds: 5));
     systemLogs.add("Vacuum cleaner finished cleaning room A");
     systemLogsController.text = systemLogs.join("\n");
+    systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     roomA.isDirty = false;
     setState(() {});
     startRoomATimer();
@@ -105,10 +111,12 @@ class _HomePageState extends State<HomePage> {
   Future<void> cleanRoomB() async {
     systemLogs.add("Vacuum cleaner is cleaning room B");
     systemLogsController.text = systemLogs.join("\n");
+    systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     setState(() {});
     await Future.delayed(const Duration(seconds: 5));
     systemLogs.add("Vacuum cleaner finished cleaning room B");
     systemLogsController.text = systemLogs.join("\n");
+    systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     roomB.isDirty = false;
     setState(() {});
     startRoomBTimer();
@@ -147,38 +155,35 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   Expanded(
-                    child: Column(
-                      children: [
-                        Text("Status : ${roomA.isDirty ? 'Dirty' : 'Clean'}"),
-                        Container(
-                          height: 200,
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            color: Colors.amber,
-                          ),
+                    child: Container(
+                      height: 200,
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(color: Colors.amber),
+                      child: Center(
+                        child: Text(
+                          roomA.isDirty ? 'Dirty' : 'Clean',
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 15),
                   Expanded(
-                    child: Column(
-                      children: [
-                        Text("Status : ${roomB.isDirty ? 'Dirty' : 'Clean'}"),
-                        Container(
-                          height: 200,
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                          ),
-                        ),
-                      ],
+                    child: Container(
+                      height: 200,
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(color: Colors.red),
+                      child: Center(
+                          child: Text(
+                        roomB.isDirty ? 'Dirty' : 'Clean',
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      )),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Text("System time : $totalSystemTime"),
+              Text("System time : $totalSystemTime", style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
@@ -191,15 +196,17 @@ class _HomePageState extends State<HomePage> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 color: Colors.grey,
-                constraints: const BoxConstraints(maxHeight: 100),
-                child: SingleChildScrollView(
-                  child: TextField(
-                    scrollController: textFieldScrollController,
-                    controller: systemLogsController,
-                    readOnly: true,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
+                constraints: const BoxConstraints(maxHeight: 200, minHeight: 200),
+                child: TextField(
+                  scrollController: textFieldScrollController,
+                  controller: systemLogsController,
+                  readOnly: true,
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(8),
                   ),
+                  maxLines: null,
                 ),
               )
             ],
