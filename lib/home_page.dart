@@ -110,31 +110,31 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      startTimer();
-                    },
-                    child: const Text("-"),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.zero,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      startTimer();
-                    },
-                    child: const Text("+"),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     ElevatedButton(
+              //       onPressed: () {
+              //         startTimer();
+              //       },
+              //       child: const Text("-"),
+              //     ),
+              //     const SizedBox(
+              //       width: 50,
+              //       child: TextField(
+              //         decoration: InputDecoration(
+              //           border: OutlineInputBorder(),
+              //           contentPadding: EdgeInsets.zero,
+              //         ),
+              //       ),
+              //     ),
+              //     ElevatedButton(
+              //       onPressed: () {
+              //         startTimer();
+              //       },
+              //       child: const Text("+"),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
@@ -150,6 +150,7 @@ class _HomePageState extends State<HomePage> {
                 constraints: const BoxConstraints(maxHeight: 100),
                 child: SingleChildScrollView(
                   child: TextField(
+                    scrollController: textFieldScrollController,
                     controller: systemLogsController,
                     readOnly: true,
                     keyboardType: TextInputType.multiline,
