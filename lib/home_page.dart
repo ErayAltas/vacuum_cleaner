@@ -27,13 +27,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    initValues();
+  }
+
+  void initValues() {
     roomA.isDirty = true;
     roomB.isDirty = true;
-    systemLogsController.addListener(() {
-      setState(() {
-        textFieldScrollController.jumpTo(textFieldScrollController.position.maxScrollExtent);
-      });
-    });
+    totalSystemTime = 60;
+    systemLogs.clear();
+    systemLogsController.clear();
+    setState(() {});
   }
 
   @override
@@ -50,7 +53,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void startSystem() {
-    systemLogs.add("system is starting");
+    initValues();
+    systemLogs.add("system is started");
     systemLogsController.text = systemLogs.join("\n");
     systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
     startCleaningTimer();
@@ -61,16 +65,17 @@ class _HomePageState extends State<HomePage> {
           totalSystemTime--;
         });
         if (totalSystemTime == 0) {
-          cancelTimers();
           systemLogs.add("system is shutting down");
           systemLogsController.text = systemLogs.join("\n");
           systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
+          cancelTimers();
         }
       },
     );
   }
 
   void startCleaningTimer() {
+    decideWhichRoom();
     cleaningTimer = Timer.periodic(
       const Duration(seconds: 10),
       (Timer timer) {
@@ -152,6 +157,9 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              const SizedBox(height: 20),
+              Text("System time : $totalSystemTime", style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20)),
+              const SizedBox(height: 40),
               Row(
                 children: [
                   Expanded(
@@ -182,17 +190,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              Text("System time : $totalSystemTime", style: Theme.of(context).textTheme.bodyLarge),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               ElevatedButton(
+                style: const ButtonStyle(minimumSize: MaterialStatePropertyAll(Size(300, 45))),
                 onPressed: () {
                   startSystem();
                 },
                 child: const Text("Start"),
               ),
-              const SizedBox(height: 20),
-              const Text("System logs"),
+              const SizedBox(height: 40),
+              const Text("System logs", style: TextStyle(fontSize: 20)),
+              const SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width,
                 color: Colors.grey,
