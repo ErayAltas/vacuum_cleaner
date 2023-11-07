@@ -88,15 +88,17 @@ class _HomePageState extends State<HomePage> {
     systemLogs.add("Vacuum cleaner controlling room A and room B");
     systemLogsController.text = systemLogs.join("\n");
     systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
-    if (roomA.isDirty) {
-      cleanRoomA();
-    } else if (roomB.isDirty) {
-      cleanRoomB();
-    } else {
-      systemLogs.add("Both rooms are clean");
-      systemLogsController.text = systemLogs.join("\n");
-      systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
-    }
+    Future.delayed(const Duration(seconds: 2)).then((value) {
+      if (roomA.isDirty) {
+        cleanRoomA();
+      } else if (roomB.isDirty) {
+        cleanRoomB();
+      } else {
+        systemLogs.add("Both rooms are clean");
+        systemLogsController.text = systemLogs.join("\n");
+        systemLogsController.selection = TextSelection.fromPosition(TextPosition(offset: systemLogsController.text.length));
+      }
+    });
   }
 
   Future<void> cleanRoomA() async {
