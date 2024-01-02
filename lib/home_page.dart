@@ -165,29 +165,39 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 200,
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(color: Colors.amber),
-                      child: Center(
-                        child: Text(
-                          roomA.isDirty ? 'Dirty' : 'Clean',
-                          style: Theme.of(context).textTheme.headlineLarge,
+                    child: Column(
+                      children: [
+                        Text("Room A", style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20)),
+                        Container(
+                          height: 200,
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(color: Colors.amber),
+                          child: Center(
+                            child: Text(
+                              roomA.isDirty ? 'Dirty' : 'Clean',
+                              style: Theme.of(context).textTheme.headlineLarge,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
-                    child: Container(
-                      height: 200,
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(color: Colors.red),
-                      child: Center(
-                          child: Text(
-                        roomB.isDirty ? 'Dirty' : 'Clean',
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      )),
+                    child: Column(
+                      children: [
+                        Text("Room B", style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20)),
+                        Container(
+                          height: 200,
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(color: Colors.red),
+                          child: Center(
+                              child: Text(
+                            roomB.isDirty ? 'Dirty' : 'Clean',
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          )),
+                        ),
+                      ],
                     ),
                   ),
                 ],
