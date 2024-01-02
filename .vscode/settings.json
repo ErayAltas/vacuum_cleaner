@@ -1,7 +1,7 @@
 {
-    "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll": true
-    }
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  }
 }
